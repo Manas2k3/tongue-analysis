@@ -1,5 +1,8 @@
-from tensorflow.keras.models import load_model
 import tensorflow as tf
+from tensorflow.keras.models import load_model
 
-model = tf.keras.models.load_model("tongue_disease_classifier_v1.h5", compile=False)
-model.save("tongue_disease_classifier_v2.keras")  # without save_format
+# Load the old model
+model = load_model("tongue_disease_classifier_v1.h5", compile=False)
+
+# Save in the new Keras-native format instead (AVOID .h5)
+model.save("clean_model.keras")

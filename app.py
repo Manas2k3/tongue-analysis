@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array, ImageDataGenerator
 import tensorflow as tf
 import numpy as np
@@ -9,7 +8,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 # === CONFIG ===
-MODEL_PATH = "tongue_disease_classifier_v1.h5"
+MODEL_PATH = "clean_model.keras"  # 💡 Updated model path
 TEST_DIR = "tongue-split/test"
 IMG_SIZE = (224, 224)
 UPLOAD_FOLDER = "uploads"
@@ -17,9 +16,9 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # === Load model and class labels ===
 print("🔄 Loading model and class labels...")
-model = load_model(MODEL_PATH)
+model = tf.keras.models.load_model(MODEL_PATH, compile=False)  # 💡 Load new format
 
-datagen = ImageDataGenerator(rescale=1./255)
+datagen = ImageDataGenerator(rescale=1. / 255)
 dummy_gen = datagen.flow_from_directory(
     TEST_DIR,
     target_size=IMG_SIZE,
