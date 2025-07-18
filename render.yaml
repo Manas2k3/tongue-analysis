@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: tongue-api
+    env: python
+    buildCommand: ""
+    startCommand: python main.py
+    runtime: python
+    region: Singapore  
+    plan: free
