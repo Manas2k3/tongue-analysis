@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 # === CONFIG ===
 MODEL_PATH = "tongue_disease_classifier_v1.h5"
+TEST_DIR = "tongue-split/test"  # Define the path to your test directory
 IMG_SIZE = (224, 224)
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -17,15 +18,23 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 print("🔄 Loading model and class labels...")
 model = tf.keras.models.load_model(MODEL_PATH, compile=False)
 
-# 💡 FIX: Hardcode the class names directly
-#    Replace these with your actual class names in the correct order.
-class_names = ['atrophic_glossitis', 'black_hairy_tongue', 'geographic_tongue', 'strawberry_tongue']
-
-print(f"✅ Model loaded. Classes: {class_names}")
+# 💡 Dynamically get class names from the directory structure
+try:
+    # We sort the list to ensure the order is consistent (alphabetical)
+    # This matches the behavior of Keras's flow_from_directory
+    class_names = sorted(os.listdir(TEST_DIR))
+    print(f"✅ Model loaded. Classes found: {class_names}")
+except FileNotFoundError:
+    print(f"❌ ERROR: The directory '{TEST_DIR}' was not found. Please check the path.")
+    # Exit or set a default list if you want the app to still run
+    class_names = []
 
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    if not class_names:
+        return jsonify({"error": "Server is not configured correctly; class names not loaded."}), 500
+
     if 'image' not in request.files:
         return jsonify({"error": "No image file provided"}), 400
 
@@ -41,7 +50,7 @@ def predict():
         # Preprocess the image
         img = load_img(filepath, target_size=IMG_SIZE)
         img_array = img_to_array(img) / 255.0
-        img_tensor = np.expand_dims(img_array, axis=0) # No need for tf.convert_to_tensor here
+        img_tensor = np.expand_dims(img_array, axis=0)
 
         # Make prediction
         predictions = model.predict(img_tensor)
