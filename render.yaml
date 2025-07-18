@@ -1,6 +1,9 @@
 services:
   - type: web
     name: tongue-api
-    env: docker
-    plan: free
-    region: singapore
+    runtime: python
+    buildCommand: ""
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PORT
+        value: 10000
