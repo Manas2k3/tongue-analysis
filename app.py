@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 # === CONFIG ===
 MODEL_PATH = "tongue_disease_classifier_v1.h5"
-TEST_DIR = "dataset-split\test"  # Define the path to your test directory
+TEST_DIR = "dataset-split/test"  # Define the path to your test directory
 IMG_SIZE = (224, 224)
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
