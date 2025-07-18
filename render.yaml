@@ -7,3 +7,4 @@ services:
     runtime: python
     region: Singapore  
     plan: free
+    
