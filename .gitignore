@@ -1,0 +1,10 @@
+Tongue_Image_Balanced.zip
+tongue_analysis_model.tflite
+tongue_analysis_model.ipynb
+model_converter.ipynb
+tongue-dataset-final
+myenv
+class_file.py
+labels.txt
+best_food101_model.pth
+model_epoch_10_val_acc_0.9654.h5
