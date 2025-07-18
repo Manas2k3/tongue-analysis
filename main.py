@@ -5,7 +5,6 @@ import tensorflow as tf
 import numpy as np
 import os
 from werkzeug.utils import secure_filename
-from pyngrok import ngrok  # 🔗 For public URL
 
 app = Flask(__name__)
 
@@ -67,10 +66,5 @@ def health_check():
     return jsonify({"message": "Tongue Analysis API is running 🚀"})
 
 if __name__ == '__main__':
-    # 🔓 Start ngrok tunnel
-    port = 5000
-    public_url = ngrok.connect(port)
-    print(f"✨ Ngrok URL: {public_url}")
-    
-    # 🏃 Run Flask
-    app.run(port=port)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
