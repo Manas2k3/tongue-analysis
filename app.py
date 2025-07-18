@@ -17,7 +17,8 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # === Load model and class labels ===
 print("🔄 Loading model and class labels...")
-model = load_model(MODEL_PATH)
+model = load_model(MODEL_PATH, compile=False, safe_mode=False)
+
 
 datagen = ImageDataGenerator(rescale=1./255)
 dummy_gen = datagen.flow_from_directory(
