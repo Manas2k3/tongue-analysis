@@ -1,9 +1,10 @@
 services:
   - type: web
-    name: tongue-api
-    runtime: python
-    buildCommand: ""
-    startCommand: gunicorn app:app
+    name: tongue-disease-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    plan: free
     envVars:
       - key: PORT
-        value: 10000
+        value: 5000
