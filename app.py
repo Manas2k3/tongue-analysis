@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 # === CONFIG ===
-MODEL_PATH = "tongue_disease_classifier_v1.h5"
+MODEL_PATH = "tongue_disease_classifier_v2.keras"
 TEST_DIR = "tongue-split/test"
 IMG_SIZE = (224, 224)
 UPLOAD_FOLDER = "uploads"
